@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى دكتورة قلبي | شهد</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="شهد ❤️">
+    
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Amiri:ital,wght@1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(to bottom, #05011a 0%, #1a0a13 100%);
+            --text-color: #ffffff;
+            --card-bg: rgba(5, 1, 26, 0.9);
+            --primary: #ff4d6d;
+            --secondary: #7000ff;
+            --neon-shadow: 0 0 25px rgba(255, 77, 109, 0.6);
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(to bottom, #fff5f7 0%, #fce4ec 100%);
+            --text-color: #4a0e2e;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --primary: #d81b60;
+            --secondary: #ad1457;
+            --neon-shadow: 0 0 15px rgba(216, 27, 96, 0.2);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .theme-switch {
+            position: fixed; top: 20px; left: 20px; z-index: 1000;
+            cursor: pointer; background: var(--card-bg);
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--primary); font-size: 20px;
+        }
+
+        .screen {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 20px;
+        }
+
+        .hidden { display: none !important; }
+
+        .name-wrapper {
+            display: flex; align-items: center; justify-content: center;
+            gap: 15px; animation: floatName 4s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .premium-name {
+            font-size: clamp(3rem, 12vw, 5.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, #fff, var(--primary), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        .cake-icon {
+            font-size: clamp(2.5rem, 10vw, 4.5rem);
+            filter: drop-shadow(0 0 10px var(--primary));
+            animation: cakeBounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shine { to { background-position: 200% center; } }
+        @keyframes floatName { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes cakeBounce { 0%, 100% { transform: scale(1) rotate(-5deg); } 50% { transform: scale(1.2) rotate(5deg); } }
+
+        .shake-text {
+            font-size: 2.2rem;
+            color: var(--primary);
+            animation: heart-pulse 0.8s infinite;
+            display: inline-block;
+            font-weight: 900;
+        }
+
+        @keyframes heart-pulse { 0%, 28%, 70% { transform: scale(1); } 14%, 42% { transform: scale(1.1); } }
+
+        .timer-display { display: flex; gap: 8px; justify-content: center; margin: 20px 0; }
+        .time-unit {
+            background: var(--card-bg); border: 2px solid var(--primary);
+            padding: 8px; border-radius: 12px; min-width: 55px;
+            box-shadow: var(--neon-shadow);
+        }
+        .time-value { font-size: 1.5rem; font-weight: 900; color: var(--primary); display: block; }
+        .time-label { font-size: 0.8rem; }
+
+        .custom-popup {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: #05011a; border: 2px solid var(--primary);
+            padding: 30px; border-radius: 25px; z-index: 2000;
+            width: 85%; max-width: 400px; text-align: center;
+            box-shadow: 0 0 60px rgba(255, 77, 109, 0.4);
+            display: none;
+        }
+
+        .btn-main {
+            background: linear-gradient(90deg, #ff4d6d 0%, #7000ff 100%);
+            border: none; padding: 15px 35px; border-radius: 50px;
+            color: white; font-weight: 900; cursor: pointer; font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            transition: 0.3s;
+        }
+
+        .album-container {
+            position: relative; width: 100%; max-width: 400px;
+            margin: 20px 0; overflow: hidden; border-radius: 20px;
+            border: 3px solid var(--primary); background: var(--card-bg);
+        }
+        .slides { display: flex; transition: transform 0.6s ease; }
+        .slide { min-width: 100%; padding: 10px; box-sizing: border-box; }
+        .slide img { width: 100%; border-radius: 15px; }
+        .caption { font-family: 'Amiri', serif; font-size: 1.2rem; margin-top: 10px; color: var(--primary); }
+
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: var(--primary); border: none; color: white;
+            width: 30px; height: 30px; border-radius: 50%; cursor: pointer; z-index: 10;
+        }
+
+        .heart-fall { position: fixed; top: -10%; color: var(--primary); z-index: 5; animation: fall linear forwards; pointer-events: none; }
+        .photo-drop { position: fixed; top: -150px; width: 60px; height: 60px; border-radius: 50%; background-size: cover; z-index: 5; animation: fall linear forwards; border: 2px solid #fff; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+
+        input {
+            padding: 12px; border-radius: 12px; border: 2px solid var(--primary);
+            text-align: center; background: var(--card-bg); color: var(--text-color); margin-bottom: 20px;
+        }
+
+        #text-box { font-family: 'Amiri', serif; font-size: 1.3rem; font-weight: bold; line-height: 1.6; }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <div class="theme-switch" onclick="toggleTheme()" id="themeToggle">🌙</div>
+
+    <audio id="introVoice" src="intro_voice.mp3"></audio>
+    <audio id="afterLoginMusic" src="new_song.mp3" loop></audio>
+    <audio id="heartbeatSound" src="https://www.soundjay.com/human/heartbeat-01.mp3" loop></audio>
+
+    <div id="suspense-popup" class="custom-popup">
+        <h2 style="color: white;">استني يا دكتورة... 😏</h2>
+        <p style="color: #ccc; font-weight: bold;">المفاجأة دي محتاجة قلب قوي.. جاهزة؟</p>
+        <button class="btn-main" onclick="openFinalSurprise()">أنا جاهزة بجد! ❤️</button>
+        </div>
+
+    <section id="login-screen" class="screen">
+        <div class="name-wrapper">
+            <div class="cake-icon">🎂</div>
+            <div class="premium-name">SHAHD</div>
+            <div class="cake-icon">🎂</div>
+        </div>
+        
+        <div class="timer-display">
+            <div class="time-unit"><span class="time-value" id="days">00</span><span class="time-label">يوم</span></div>
+            <div class="time-unit"><span class="time-value" id="hours">00</span><span class="time-label">ساعة</span></div>
+            <div class="time-unit"><span class="time-value" id="mins">00</span><span class="time-label">دقيقة</span></div>
+            <div class="time-unit"><span class="time-value" id="secs">00</span><span class="time-label">ثانية</span></div>
+        </div>
+        <input type="password" id="passInput" placeholder="دلع بتقوليه ليا و بتعصب منو؟🐥🔒">
+        <button class="btn-main" onclick="handleLogin()">ادخل يا وحش الكون❤️‍🔥😉</button>
+    </section>
+
+    <section id="suspense-screen" class="screen hidden">
+        <h2 class="shake-text">نبضات قلبي بتزيد.. ❤️‍🔥</h2>
+        <button class="btn-main" onclick="showPopup()">افتحي المفاجأة 🎁</button>
+    </section>
+
+    <section id="main-content" class="screen hidden">
+        <h2 style="color: var(--primary); font-size: 2rem;">كل سنة وأنتِ طيبة يا دكتورة قلبي ❤️</h2>
+        <div id="text-box" style="margin: 20px; max-width: 500px;"></div>
+
+        <div class="album-container">
+            <button class="nav-btn" style="right: 5px;" onclick="moveSlide(1)">❮</button>
+            <div class="slides" id="slider">
+                <div class="slide"><img src="photo1.jpg"><div class="caption">أول مرة عرفنا بعض.. صدفة خلت حياتي جنة ❤️</div></div>
+                <div class="slide"><img src="photo2.jpg"><div class="caption">ضحكتك هي السبب اللي بيخليني أكمل 🌸</div></div>
+                <div class="slide"><img src="photo3.jpg"><div class="caption">أشطر وأجمل دكتورة في الكوكب 🩺</div></div>
+            </div>
+            <button class="nav-btn" style="left: 5px;" onclick="moveSlide(-1)">❯</button>
+        </div>
+
+        <div style="width: 100%; max-width: 400px; border-radius: 20px; overflow: hidden; border: 3px solid var(--primary); margin: 20px 0; background: #000;">
+            <video id="myVideo" controls style="width: 100%;">
+                <source src="video.mp4" type="video/mp4">
+                متصفحك لا يدعم الفيديو.
+            </video>
+        </div>
+
+        <button class="btn-main" style="opacity: 0.6; font-size: 0.8rem;" onclick="openSecret()">🔐 الركن السري</button>
+    </section>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const isLight = body.getAttribute('data-theme') === 'light';
+            body.setAttribute('data-theme', isLight ? 'dark' : 'light');
+            document.getElementById('themeToggle').innerHTML = isLight ? '🌙' : '☀️';
+        }
+
+        function updateTimer() {
+            const target = new Date("April 18, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff > 0) {
+                document.getElementById("days").innerText = Math.floor(diff / (1000*60*60*24));
+                document.getElementById("hours").innerText = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+                document.getElementById("mins").innerText = Math.floor((diff % (1000*60*60)) / (1000*60));
+                document.getElementById("secs").innerText = Math.floor((diff % (1000*60)) / 1000);
+            }
+        }
+        setInterval(updateTimer, 1000);
+
+        function handleLogin() {
+            if (document.getElementById('passInput').value === "الكتكوت") {
+                document.getElementById('introVoice').pause();
+                document.getElementById('heartbeatSound').play();
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('suspense-screen').classList.remove('hidden');
+            } else { alert("ركزي يا قلب الكتكوت😉"); }
+        }
+
+        function showPopup() { document.getElementById('suspense-popup').style.display = 'block'; }
+
+        function openFinalSurprise() {
+            document.getElementById('suspense-popup').style.display = 'none';
+            document.getElementById('heartbeatSound').pause();
+            document.getElementById('afterLoginMusic').play();
+            document.getElementById('suspense-screen').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+            
+            // تشغيل الفيديو تلقائياً
+            const v = document.getElementById('myVideo');
+            v.play().catch(e => console.log("Autoplay blocked"));
+
+            startTypewriter("يا دكتورة قلبي.. المسافات اللي بين مصر وتركيا مجرد أرقام، لأنك ساكنة في القلب.. كل سنة وأنتِ سندي وحبيبتي.. بحبك يا حوكشاااااااااااااااااااااااااااااااا ❤️");
+            setInterval(createHeart, 400);
+            setInterval(createPhotoDrop, 2000);
+        }
+
+        function createHeart() {
+            const h = document.createElement('div'); h.classList.add('heart-fall'); h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw'; h.style.animationDuration = Math.random()*3+2+'s';
+            document.body.appendChild(h); setTimeout(() => h.remove(), 5000);
+        }
+
+        function createPhotoDrop() {
+            const d = document.createElement('div'); d.classList.add('photo-drop');
+            // بيختار صورة عشوائية من الـ 3 صور بتوعك
+            const imgNum = Math.floor(Math.random()*3)+1;
+            d.style.backgroundImage = `url(photo${imgNum}.jpg)`;
+            d.style.left = Math.random()*90+'vw'; d.style.animationDuration = '5s';
+            document.body.appendChild(d); setTimeout(() => d.remove(), 5000);
+        }
+
+        let currentSlide = 0;
+        function moveSlide(dir) {
+            const slider = document.getElementById('slider');
+            const total = document.querySelectorAll('.slide').length;
+            currentSlide = (currentSlide + dir + total) % total;
+            slider.style.transform = `translateX(${currentSlide * 100}%)`;
+        }
+
+        function startTypewriter(msg) {
+            let i = 0; const box = document.getElementById('text-box');
+            function type() { if (i < msg.length) { box.innerHTML += msg.charAt(i); i++; setTimeout(type, 70); } }
+            type();
+        }
+
+        function openSecret() {
+            const code = prompt("كود المنطقة السرية:");
+            if(code === "ms" || code === "MS") alert("شهد.. أنتِ عمري كله، ووعد مني هفضل سندك وضهرك وأمانك لآخر العمر. ❤️");
+        }
+
+        window.addEventListener('click', () => {
+            const intro = document.getElementById('introVoice');
+            if(intro.paused && !document.getElementById('login-screen').classList.contains('hidden')) intro.play().catch(e=>{});
+        }, {once: true});
+    </script>
+</body>
+</html>
